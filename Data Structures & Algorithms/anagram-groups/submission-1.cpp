@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string generate(string& word){
+        int arr[26] = {0};
+        // count the freq of word
+        for(char& ch : word){
+            arr[ch - 'a']++;
+        }
+        // create a new_word with hashed freq
+        string new_word = " ";
+        for(int i =0 ; i < 26; i++){
+            int freq = arr[i];
+
+            if(freq > 0){
+                new_word += string(freq , i+'a');
+            }
+        }
+        return new_word;
+    }
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string,vector<string>>mpp;
+        vector<vector<string>>result;
+        for(int i = 0 ; i < strs.size(); i++){
+            string word = strs[i];
+            string new_word = generate(word);
+            mpp[new_word].push_back(word);
+        }
+
+        for(auto& it : mpp){
+            result.push_back(it.second);
+        }
+        return result;
+    }
+};
